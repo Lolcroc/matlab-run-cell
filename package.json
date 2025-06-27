@@ -1,0 +1,78 @@
+{
+    "name": "matlab-run-cell",
+    "displayName": "MATLAB Run Cell",
+    "description": "Add a command to run the current MATLAB cell in VS code.",
+    "icon": "icon.png",
+    "license": "MIT",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.96.0"
+    },
+    "publisher": "Lolcroc",
+    "repository": {
+        "url": "https://github.com/Lolcroc/matlab-run-cell"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "activationEvents": [],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "matlab-run-cell.runCell",
+                "title": "MATLAB: Run Current Cell",
+                "icon": "$(play)",
+                "when": "!matlab.isDebugging"
+            }
+        ],
+        "configuration": {
+            "title": "MATLAB Run Cell",
+            "properties": {
+                "matlab-run-cell.focusTimeOut": {
+                    "type": "number",
+                    "default": 50,
+                    "description": "Time-out duration in milliseconds for bringing the editor back into focus after running a cell."
+                }
+            }
+        },
+        "keybindings": [
+            {
+                "command": "matlab-run-cell.runCell",
+                "key": "ctrl+enter",
+                "when": "editorTextFocus && editorLangId == 'matlab'"
+            }
+        ],
+        "menus": {
+            "editor/title/run": [
+                {
+                    "command": "matlab-run-cell.runCell",
+                    "when": "editorLangId == matlab && !matlab.isDebugging",
+                    "group": "2_run"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src",
+        "test": "vscode-test"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.96.0",
+        "@types/mocha": "^10.0.10",
+        "@types/node": "20.x",
+        "@typescript-eslint/eslint-plugin": "^8.31.1",
+        "@typescript-eslint/parser": "^8.31.1",
+        "eslint": "^9.25.1",
+        "typescript": "^5.8.3",
+        "@vscode/test-cli": "^0.0.10",
+        "@vscode/test-electron": "^2.5.2"
+    },
+    "extensionDependencies": [
+        "mathworks.language-matlab"
+    ]
+}
